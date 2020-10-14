@@ -1,0 +1,23 @@
+<form [formGroup]="form">
+  <mat-form-field appearance="fill" floatLabel="always">
+    <mat-spinner class="city-spinner" diameter="20" *ngIf="!locationsGroups"></mat-spinner>
+    <mat-label>City</mat-label>
+    <input
+      type="text"
+      matInput
+      placeholder="{{locationsGroups ? 'Enter city...' : ''}}"
+      formControlName="locationsControl"
+      [required]="required"
+      (keyup)="reset()"
+      (blur)="onLocationSearchFocusLost()"
+      [matAutocomplete]="autoGroup">
+    <mat-error *ngIf="locationsControl.invalid">{{getErrorMessage(locationsControl)}}</mat-error>
+    <mat-autocomplete #autoGroup="matAutocomplete" (optionSelected)="locationSelect($event)" #aa>
+      <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
+        <mat-option *ngFor="let location of group.locations" [value]="location.title" [id]="location._id">
+          {{location.title}}
+        </mat-option>
+      </mat-optgroup>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

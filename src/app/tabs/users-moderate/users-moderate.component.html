@@ -1,0 +1,5 @@
+<p *ngIf="noUserForModeration">All users are moderated.</p>
+<div *ngIf="!noUserForModeration">
+  <button *ngIf="user" class="width-full" mat-raised-button color="primary" (click)="nextUser()">Next UnModerated.</button>
+  <app-user-profile *ngIf="user" [user]="user" [load]="load"></app-user-profile>
+</div>

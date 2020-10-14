@@ -1,0 +1,15 @@
+@mixin content-center {
+  justify-content: center;
+}
+
+mat-header-cell {
+  text-transform: uppercase;
+  &.padding-right--24 {
+    padding-right: 24px;
+  }
+  @include content-center;
+}
+
+mat-cell {
+  @include content-center;
+}

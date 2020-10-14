@@ -1,0 +1,21 @@
+<div class="backdrop"></div>
+<app-toolbar [title]="title" *ngIf="!isHelpPage"></app-toolbar>
+<div class="main-container" fxLayout="column" fxLayoutAlign="center center">
+  <div *ngIf="!isHelpPage" class="width-full">
+    <nav *appIsAuth mat-tab-nav-bar>
+      <a mat-tab-link
+         [routerLink]="routes.USERS"
+         routerLinkActive #rla="routerLinkActive"
+         appRouteSpinner
+         [active]="preparedRoute === routes.USERS || (!preparedRoute && rla.isActive)"
+      ><span>Users.</span></a>
+      <a mat-tab-link [routerLink]="routes.USERS_MODERATE" appRouteSpinner routerLinkActive #rlb="routerLinkActive"
+         [active]="preparedRoute === routes.USERS_MODERATE || (!preparedRoute && rlb.isActive)">Moderate users.</a>
+      <a mat-tab-link [routerLink]="routes.CLUBS" appRouteSpinner routerLinkActive #rld="routerLinkActive"
+         [active]="preparedRoute === routes.CLUBS || (!preparedRoute && rld.isActive)">Clubs.</a>
+    </nav>
+  </div>
+  <div class="content" role="main">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+@import '../../../styles/material-override/raised-button';
+@import '../../../styles/helper';
+@import '../../../styles/styles-theme';
+
+@include mat-core();
+@include raised-button-override;
+
+$profile-panel-width: 640px;
+
+.profile-container {
+  position: relative;
+
+  @media (min-width: $profile-panel-width) {
+    width: $profile-panel-width;
+  }
+
+  .profile-container--content > * {
+    @media (min-width: 641px) {
+      margin: 1em;
+    }
+    @media (max-width: 640px) {
+      margin-bottom: 2vh;
+    }
+  }
+}
+
+::ng-deep .attention-border {
+  .mat-form-field-flex {
+    border: 2px solid mat-color($material-grey-main, default);
+  }
+}
+
+.photos {
+  width: 100%;
+  .mat-accordion {
+    width: 100%;
+  }
+  .gap {
+    margin: 1em;
+  }
+}
+
+.phone-container {
+  display: flex;
+  flex-flow: row;
+
+  .image-container {
+    position: relative;
+    height: 40px;
+    margin-top: 11px;
+    max-width: 40px;
+    margin-right: 1em;
+    flex: 0 1 100%;
+
+    .avatar-clear {
+      top: 0;
+      right: 0;
+      position: absolute;
+      display: none;
+    }
+
+    &:hover {
+      .avatar-clear {
+        display: block;
+      }
+    }
+  }
+
+  .phone-container-field {
+    flex: 0 1 100%;
+    min-width: 70%;
+  }
+}
+
+$avatar-size: 40px !default;
+.mat-card-avatar {
+  height: $avatar-size;
+  width: $avatar-size;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  // Makes `<img>` tags behave like `background-size: cover`. Not supported
+  // in IE, but we're using it as a progressive enhancement.
+  object-fit: cover;
+}
+
+.image-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+
+  .avatar-clear {
+    top: 0;
+    right: 0;
+    position: absolute;
+    display: none;
+  }
+
+  &:hover {
+    .avatar-clear {
+      display: block;
+    }
+  }
+}
+
+::ng-deep.mat-expansion-panel-body {
+  padding: 0 !important;
+}

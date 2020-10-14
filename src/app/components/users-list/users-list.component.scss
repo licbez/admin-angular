@@ -1,0 +1,43 @@
+@import '../../../styles/styles-theme';
+@import '../../../styles/material-override/mat-table-center';
+
+.list-container {
+  position: relative;
+}
+
+.role-title {
+  cursor: pointer;
+}
+
+.mat-row {
+  border-right: 1px solid transparent;
+  border-left: 5px solid transparent;
+  cursor: pointer;
+  &:hover {
+    border-right: 1px solid mat-color($primary);
+  }
+  &.selected {
+    border-left: 5px solid mat-color($primary);
+  }
+}
+
+.grow0 {
+  flex-grow: 0;
+}
+
+.absolute-right {
+  position: absolute;
+  right: 0;
+}
+
+@media (max-width: 374px) {
+  .mat-cell {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 400px) and (min-width: 375px) {
+  .mat-cell {
+    font-size: 12px;
+  }
+}

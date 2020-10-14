@@ -1,0 +1,64 @@
+@import "../styles/constants";
+@import "../styles/material-override/raised-button";
+@import "../styles/helper";
+@import '~@angular/flex-layout/mq';
+
+@include raised-button-override;
+
+.backdrop:after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($COLOR_BACKGROUND_MAIN, 0.85);
+}
+
+.backdrop {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 50%;
+  background-repeat: repeat;
+  z-index: -1;
+}
+
+.backdrop {
+  background-image: url('/assets/images/tiny-squares.png');
+}
+
+.main-container {
+  margin: 0 auto;
+  width: 640px;
+  @include layout-bp(xs) {
+    width: 100%;
+  }
+
+  .mat-spinner {
+    position: absolute;
+    left: 0;
+  }
+}
+
+.content {
+  margin: 2vw 0;
+  width: 100%;
+}
+
+.width-full {
+  width: 100%;
+}
+
+::ng-deep .mat-tab-links {
+  flex-wrap: wrap;
+
+  .mat-tab-link {
+    font-family: "San Francisco Regular", "Helvetica Neue", sans-serif;
+    width: 33%;
+
+    @media (max-width: 670px) {
+      width: 100%;
+    }
+  }
+}

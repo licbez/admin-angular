@@ -1,0 +1,61 @@
+@import "../../../../styles/material-override/raised-button";
+@import '../../../../styles/styles-theme';
+
+$border-width: 2px;
+
+mat-card {
+  padding: 0;
+
+  .mat-card-image {
+    max-width: calc(100% - #{$border-width} * 2);
+    margin: 0;
+  }
+
+  > .mat-card-actions {
+    margin: 0;
+  }
+}
+
+.content-body {
+  background: rgba(0, 0, 0, .2);
+
+  .image-block {
+    display: flex;
+    align-items: center;
+    height: 200px;
+    cursor: pointer;
+
+    mat-icon {
+      z-index: 0;
+      top: 0;
+      right: 0;
+      position: absolute;
+    }
+
+    .status {
+      position: absolute;
+    }
+
+    img {
+      max-height: 200px;
+      border-radius: 5px;
+      border: $border-width solid transparent;
+
+      &.attention-border {
+        border: $border-width solid mat-color($material-grey-main, default);
+      }
+    }
+  }
+}
+
+@include raised-button-override;
+.mat-flat-button {
+  padding: 0 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+
+  &.mat-warn {
+    color: $COLOR_TEXT_MAIN;
+  }
+}

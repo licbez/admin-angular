@@ -1,0 +1,19 @@
+@import "../../../../styles/constants";
+
+h2.title {
+  font-weight: 200;
+  margin-top: 0.5em;
+  margin-bottom: 0.83em;
+}
+
+@import "../../../../styles/material-override/raised-button";
+
+@include raised-button-override;
+
+.mat-raised-button {
+  width: 100%;
+}
+
+.content {
+  position: relative;
+}

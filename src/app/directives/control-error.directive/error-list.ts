@@ -1,0 +1,15 @@
+export const errorList: {[key: string]: string } = {
+  required: 'This field is required.',
+  minlength: 'String is too short.',
+  maxlength: 'String is too long.',
+  max: 'Value must be less.',
+  min: 'Value must be greater.',
+  number: 'Only numbers available.',
+  url: 'Set valid url.',
+  default: 'Validation failed.',
+  wrongEmailOrPassword: 'Wrong password or email',
+  email: 'Set correct email address',
+  emptyResponse: 'Список локаций пуст. Вы не сможите создать клуб пока-что.',
+  errorResponse: 'Сервер не отвечает.',
+  mustBeSelected: 'Вы должны выбрать значение из списка.',
+};

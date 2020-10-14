@@ -1,0 +1,16 @@
+@import '~@angular/flex-layout/mq';
+@import "../../../styles/material-override/raised-button";
+@import "../../../styles/styles-theme";
+@import "../../../styles/helper";
+
+@include raised-button-override;
+
+@media (max-width: 640px) {
+  .panel > * {
+    margin: 1vw;
+  }
+}
+
+.warn {
+  color: mat-color($warn);
+}

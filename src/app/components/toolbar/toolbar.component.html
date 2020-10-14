@@ -1,0 +1,20 @@
+<div class="toolbar">
+  <div fxFlex>
+    <h2 class="no-margin">{{ title }}</h2>
+  </div>
+  <div *ngIf="owner$ | async as owner" class="login-content">
+    <span>{{ owner?.email }}</span>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logOut()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+  <div *ngIf="(owner$ | async) === undefined">
+    <button mat-raised-button color="primary" (click)="openLoginForm()">вход</button>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+<div class="profile-container">
+  <app-spinner *ngIf="load"></app-spinner>
+  <mat-card *ngIf="user">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="profile-container--content" fxLayoutAlign="center center">
+        <div class="phone-container" fxFlex="0 1 210px">
+          <div class="image-container" *ngIf="user?.avatar">
+            <img mat-card-avatar src="{{user!.avatar}}" alt="#">
+          </div>
+          <mat-form-field appearance="standard" class="phone-container-field">
+            <mat-label>phone</mat-label>
+            <input matInput value="{{user?.phone}}" disabled/>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="standard" fxFlex="0 1 210px">
+          <mat-label>role</mat-label>
+          <input matInput value="{{user?.role}}" disabled/>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlex="0 1 210px" floatLabel="always">
+          <mat-label>name</mat-label>
+          <input
+            [formControl]="name"
+            matInput
+            placeholder="Enter name here..."
+            [appInputLoader]="loadList.has('name')"
+          />
+          <mat-error *appControlError="name"></mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" floatLabel="always" fxFlex="0 1 210px">
+          <mat-label>email</mat-label>
+          <input
+            [formControl]="email"
+            matInput
+            [appInputLoader]="loadList.has('email')"
+            placeholder="Enter email here..."
+          />
+          <mat-error *appControlError="email"></mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" floatLabel="always" fxFlex="0 1 210px">
+          <mat-label>about</mat-label>
+          <textarea
+            matInput
+            [formControl]="about"
+            [appInputLoader]="loadList.has('about')"
+            placeholder="Profile info"
+          ></textarea>
+          <mat-error *appControlError="about"></mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 1 210px" [ngClass]="{ 'attention-border': user.status === STATUSES.PENDING }">
+          <mat-label>status</mat-label>
+          <mat-select
+            [formControl]="status"
+            [appInputLoader]="loadList.has('status')"
+            name="status"
+          >
+            <mat-option *ngFor="let status of statusList; let i = index" [value]="i">
+              {{status}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="user && (user?.photos.length || user?.certificates.length)" fxLayout="column" class="photos"
+       fxLayoutGap="1em" fxLayoutAlign="center center">
+    <mat-accordion>
+      <mat-expansion-panel *ngIf="user?.photos.length">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Photo.
+          </mat-panel-title>
+          <mat-panel-description>
+            Click to open.
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div fxLayout="row wrap" fxLayoutAlign="space-around">
+          <app-approvable-image
+            fxFlex="0 1 140px"
+            class="gap"
+            *ngFor="let photo of user?.photos; let i = index"
+            [content]="photo"
+            (accept)="decide(i, GROUPS.PHOTO, APPROVE_STATE.ACCEPT)"
+            (refusal)="decide(i, GROUPS.PHOTO, APPROVE_STATE.DECLINE)"
+          ></app-approvable-image>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="user?.certificates.length">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Сертификаты
+          </mat-panel-title>
+          <mat-panel-description>
+            Нажмите чтобы открыть
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div fxLayout="row wrap" fxLayoutAlign="space-around">
+          <app-approvable-image
+            fxFlex="0 1 140px"
+            class="gap"
+            *ngFor="let certificate of user?.certificates; let i = index"
+            [content]="certificate"
+            (accept)="decide(i, GROUPS.CERTIFICATES, APPROVE_STATE.ACCEPT)"
+            (refusal)="decide(i, GROUPS.CERTIFICATES, APPROVE_STATE.DECLINE)"
+          ></app-approvable-image>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

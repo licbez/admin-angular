@@ -1,0 +1,22 @@
+<h2 mat-dialog-title class="title">Добавить клуб</h2>
+<div mat-dialog-content>
+  <div class="content relative" fxLayout="column" fxLayoutGap="1em" fxLayoutAlign="center center">
+    <app-spinner *ngIf="load"></app-spinner>
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>Название</mat-label>
+      <input matInput placeholder="Введите название..." [formControl]="title">
+      <mat-error *appControlError="title"></mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>Адресс</mat-label>
+      <input matInput [formControl]="address" placeholder="Введите адрес...">
+      <mat-error *appControlError="address"></mat-error>
+    </mat-form-field>
+
+    <app-locations-selector
+      (locationChange)="locationChange($event)"
+    ></app-locations-selector>
+    <button mat-raised-button color="primary" (click)="create()">Создать</button>
+  </div>
+</div>

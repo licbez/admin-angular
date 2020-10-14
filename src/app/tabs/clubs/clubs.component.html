@@ -1,0 +1,25 @@
+<div
+  fxLayout="row wrap"
+  fxLayoutAlign="center flex-start"
+  fxLayoutAlign.xs="flex-end"
+  class="panel"
+>
+  <button fxFlex="1 0 auto" fxFlex.xs="100%" mat-raised-button color="primary" (click)="openDialog()">Add club.</button>
+  <app-locations-selector
+    (locationChange)="locationChange($event)"
+    [required]="false"
+    [locationId]="locationId"
+    [withClubs]="true"
+    fxFlexOffset="10px"
+    fxFlexOffset.xs="0"
+  ></app-locations-selector>
+  <app-club-list
+    fxFlex="100%"
+    *ngIf="data?.clubs.length"
+    [data]="data"
+    [load]="!subscription.closed"
+    (paginationChange)="paginationChange($event)"
+  ></app-club-list>
+  <p class="text--center" fxFlex="100%" *ngIf="data === undefined && !error">You should choose location for clubs.</p>
+  <p class="warn" fxFlex="100%" *ngIf="error">{{error.message}}</p>
+</div>

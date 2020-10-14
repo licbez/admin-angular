@@ -1,0 +1,2 @@
+<app-users-list [data]="data" [load]="!subscription.closed" (selectUser)="userSelect($event)"
+               (stateChange)="listChange($event)" [hideRoles]="true"></app-users-list>

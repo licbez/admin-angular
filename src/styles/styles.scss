@@ -1,0 +1,59 @@
+@import 'styles-theme.scss';
+@import 'constants';
+@import 'material-override/raised-button';
+
+.material-theme {
+  $theme: $material-theme;
+  @include angular-material-theme($theme);
+  @include mat-grid-mixin($theme);
+}
+
+.material-theme-grey {
+  $theme: $material-theme-grey;
+  @include angular-material-theme($theme);
+  @include mat-grid-mixin($theme);
+}
+
+@font-face {
+  font-family: 'San Francisco Light';
+  src: url('src/assets/fonts/SFUIText-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'San Francisco Regular';
+  src: url('src/assets/fonts/SFUIText-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.relative {
+  position: relative;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'San Francisco Regular', 'Helvetica Neue', sans-serif;
+  color: $COLOR_TEXT_MAIN;
+  overflow-y: visible;
+}
+
+:focus {
+  outline: none;
+} // Remove browser default;
+
+.cdk-overlay-backdrop-showing {
+  overflow-y: hidden;
+}
+
+.user-profile {
+  max-width: 65vw;
+  @media (max-width: 640px) {
+    max-width: 98vw;
+    > mat-dialog-container {
+      padding: 1vw;
+    }
+  }
+}
