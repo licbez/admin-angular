@@ -69,7 +69,7 @@ export class UserProfileComponent implements OnDestroy, OnChanges {
 
   public ngOnDestroy(): void {
     this.snackBar.dismiss();
-    this.preloader.change(undefined);
+    this.preloader.load$.next(undefined);
     this.subscription.unsubscribe();
   }
 

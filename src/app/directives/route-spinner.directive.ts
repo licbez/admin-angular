@@ -35,7 +35,7 @@ export class RouterSpinnerDirective implements AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit(): void {
-    this.subscription = this.preloader.get()
+    this.subscription = this.preloader.load$
       .subscribe(path => {
         if (path && path === this.path) {
           this.show();

@@ -10,15 +10,7 @@ export class RoutePreloaderService {
   constructor(private router: Router) {
     router.events.subscribe((event: Event) => this.isLazyRouteLoad(event));
   }
-  private readonly load$ = new BehaviorSubject<undefined | AppRoutingEnum>(undefined);
-
-  public get(): BehaviorSubject<undefined | AppRoutingEnum> {
-    return this.load$;
-  }
-
-  public change(mode: undefined | AppRoutingEnum): void {
-    this.load$.next(mode);
-  }
+  public readonly load$ = new BehaviorSubject<undefined | AppRoutingEnum>(undefined);
 
   private isLazyRouteLoad(event: Event): void {
     if (!(event instanceof RouteConfigLoadStart || event instanceof RouteConfigLoadEnd)) {
@@ -27,7 +19,7 @@ export class RoutePreloaderService {
     const isStart = event instanceof RouteConfigLoadStart;
     if (event.route.data?.lazy === true) {
       const state = isStart ? event.route.path! as AppRoutingEnum : undefined;
-      this.change(state);
+      this.load$.next(state);
     }
   }
 }

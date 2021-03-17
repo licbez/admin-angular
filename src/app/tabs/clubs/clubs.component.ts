@@ -11,18 +11,20 @@ import { IClubsResponse } from '../../../services/api/api-app/app-clubs-api/club
 import { AppClubsApi } from '../../../services/api/api-app/app-clubs-api/app-clubs-api.service';
 import { Subscription } from 'rxjs';
 import { IPaginationRequest } from '../../../services/api/api-app/common.interfaces';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-clubs',
   templateUrl: './clubs.component.html',
   styleUrls: ['./clubs.component.scss']
 })
-export class ClubsComponent implements /*OnInit, */OnDestroy {
+export class ClubsComponent implements OnDestroy {
 
   @serialize(StorageIndex.LOCATION)
   public locationId!: string | null;
   public data: IClubsResponse | undefined;
   public error!: Error;
+  public load: boolean;
   public subscription = new Subscription();
 
   @ViewChild(LocationsSelectorComponent) private locationSelector!: LocationsSelectorComponent;
@@ -31,7 +33,7 @@ export class ClubsComponent implements /*OnInit, */OnDestroy {
     public readonly clubDialog: MatDialog,
     private readonly appClubsApi: AppClubsApi
   ) {
-    // Empty
+    this.load = this.locationId !== null;
   }
 
   public ngOnDestroy(): void {
@@ -64,7 +66,11 @@ export class ClubsComponent implements /*OnInit, */OnDestroy {
 
   public fetchClubs(location: string, paginationRequest: IPaginationRequest): void {
     this.subscription.unsubscribe();
+    this.load = true;
     this.subscription = this.appClubsApi.listByLocation(location, paginationRequest)
+      .pipe(finalize(() => {
+        this.load = false;
+      }))
       .subscribe((response) => {
         this.data = response;
       }, error => this.error = error);

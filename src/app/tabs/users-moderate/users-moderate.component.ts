@@ -40,7 +40,7 @@ export class UsersModerateComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.snackBar.open('Server is down.', 'Good.');
+    this.snackBar.open('Server is down.', 'Ok.');
   }
 
   public nextUser(): void {
@@ -51,7 +51,7 @@ export class UsersModerateComponent implements OnInit, OnDestroy {
       if (user._id === oldId) {
         this.snackBar.open(
           'For moderation available only this user.',
-          'Good.'
+          'Ok.'
         );
         return;
       }
@@ -65,14 +65,10 @@ export class UsersModerateComponent implements OnInit, OnDestroy {
   }
 
   set load(flag: boolean) {
-    if (flag) {
-      this.preloader.change(AppRoutingEnum.USERS_MODERATE);
-    } else {
-      this.preloader.change(undefined);
-    }
+    this.preloader.load$.next(flag ? AppRoutingEnum.USERS_MODERATE : undefined);
   }
 
   get load(): boolean {
-    return this.preloader.get().getValue() === AppRoutingEnum.USERS_MODERATE;
+    return this.preloader.load$.getValue() === AppRoutingEnum.USERS_MODERATE;
   }
 }

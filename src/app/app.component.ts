@@ -16,7 +16,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   public preparedRoute: string | undefined;
   public isHelpPage = false;
 
-  private subscription?: Subscription;
+  private subscription = new Subscription();
 
   constructor(private routePreloader: RoutePreloaderService, private router: Router) {
     router.events.pipe(
@@ -28,12 +28,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
 
   public ngAfterViewInit(): void {
-    this.subscription = this.routePreloader.get().subscribe((value) => {
+    const subscription = this.routePreloader.load$.subscribe((value) => {
       this.preparedRoute = value;
     });
+    this.subscription.add(subscription);
   }
 
   public ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

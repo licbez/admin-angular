@@ -35,7 +35,6 @@ export class ClubAddComponent implements OnDestroy {
     private snackBar: MatSnackBar,
   ) {
     // Empty
-    console.log(this.subscription.closed);
   }
 
   public locationChange(value: ILocationSelectEvent | undefined): void {
@@ -56,7 +55,7 @@ export class ClubAddComponent implements OnDestroy {
     };
 
     if (this.lastAddedClub && isClubsEqual(body, this.lastAddedClub)) {
-      this.snackBar.open('Вы уже добавляли такой клуб.', 'Хорошо');
+      this.snackBar.open('You have already added this a club.', 'Ok');
       return;
     }
     this.load = true;
@@ -72,13 +71,13 @@ export class ClubAddComponent implements OnDestroy {
 
   private onSuccess(body: IClubCreateRequest): void {
     this.lastAddedClub = body;
-    this.snackBar.open(`Клуб ${body.title} был создан.`, 'Хорошо');
+    this.snackBar.open(`Club ${body.title} was created.`, 'Ok');
   }
 
   private onError(): void {
     this.snackBar.open(
-      'Невозможно создать клуб. Сервер ведет себя не предсказуемо, обратитесь в поддержку.',
-      'Хорошо',
+      'Unable to create club. The server is behaving unpredictably, contact support.',
+      'Ok',
     );
   }
 }

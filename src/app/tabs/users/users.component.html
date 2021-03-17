@@ -1,15 +1,9 @@
 <div class="users-container" fxLayout="column">
-<!--  <button-->
-<!--    [disabled]="loaded"-->
-<!--    mat-raised-button-->
-<!--    (click)="showTrainersOnlyToggle()"-->
-<!--    color="primary"-->
-<!--  >{{all ? 'Show trainers without clubs.' : 'Show all users.'}}</button>-->
   <app-users-list
     [data]="data"
     (stateChange)="fetchData($event.paginationRequest, $event.role, $event.sort)"
     (selectUser)="onUserSelect($event)"
-    [load]="loaded"
+    [load]="load"
     [hideRoles]="!all"
   ></app-users-list>
 </div>

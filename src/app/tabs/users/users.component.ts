@@ -10,6 +10,8 @@ import { AppUserApiService } from '../../../services/api/api-app/app-user-api/ap
 import { IUsersListState } from '../../components/users-list/users-list.component';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import {AppRoutingEnum} from '../../app-routing-enum';
+import {RoutePreloaderService} from '../../../services/route-preloader.service';
 
 @Component({
   templateUrl: './users.component.html',
@@ -23,11 +25,10 @@ export class UsersComponent implements OnInit, OnDestroy {
   public all = true;
   private readonly subscription = new Subscription();
 
-  public loaded!: boolean;
-
   constructor(
     private dialog: MatDialog,
     private userApiService: AppUserApiService,
+    private preloader: RoutePreloaderService,
   ) {
     // Empty
   }
@@ -45,26 +46,28 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.dialog.open(UserProfilePreviewComponent, { data: { id }, maxHeight: '90vh', panelClass: 'user-profile' });
   }
 
-  public showTrainersOnlyToggle(): void {
-    this.all = !this.all;
-    const paginationRequest = { perPage: this.lastFetchedData.paginationRequest.perPage, page: 1 };
-    this.fetchData(paginationRequest, undefined, this.lastFetchedData.sort);
-  }
-
   public fetchData(
     paginationRequest: IPaginationRequest,
     role: ROLES | undefined,
     sort: Sort,
   ): void {
-    this.loaded = true;
+    this.load = true;
     this.lastFetchedData = { paginationRequest, role, sort };
     const subscription = this.userApiService.list(paginationRequest, role, sort, !this.all)
       .pipe(finalize(() => {
-        this.loaded = false;
+        this.load = false;
       }))
       .subscribe(({ users, pagination }) => {
         this.data = { users, pagination, sort };
       });
     this.subscription.add(subscription);
+  }
+
+  set load(flag: boolean) {
+    this.preloader.load$.next(flag ? AppRoutingEnum.USERS : undefined);
+  }
+
+  get load(): boolean {
+    return this.preloader.load$.getValue() === AppRoutingEnum.USERS;
   }
 }

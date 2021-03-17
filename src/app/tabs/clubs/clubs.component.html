@@ -15,11 +15,11 @@
   ></app-locations-selector>
   <app-club-list
     fxFlex="100%"
-    *ngIf="data?.clubs.length"
+    *ngIf="data?.clubs.length || load"
     [data]="data"
-    [load]="!subscription.closed"
+    [load]="load"
     (paginationChange)="paginationChange($event)"
   ></app-club-list>
-  <p class="text--center" fxFlex="100%" *ngIf="data === undefined && !error">You should choose location for clubs.</p>
+  <p class="text--center" fxFlex="100%" *ngIf="data === undefined && !error && !load">You should choose location for clubs.</p>
   <p class="warn" fxFlex="100%" *ngIf="error">{{error.message}}</p>
 </div>

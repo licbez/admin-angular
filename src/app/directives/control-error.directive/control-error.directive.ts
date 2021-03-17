@@ -2,7 +2,6 @@ import { Directive, Input, OnDestroy, OnInit, Renderer2, TemplateRef, ViewContai
 import { AbstractControl } from '@angular/forms';
 import { merge, Subscription } from 'rxjs';
 import { errorList } from './error-list';
-import { IErrorValidationParams } from './error-validation-params.interface';
 import { distinctUntilChanged, startWith } from 'rxjs/operators';
 
 @Directive({
@@ -28,7 +27,6 @@ export class ControlErrorDirective implements OnInit, OnDestroy {
     let errorName: string | undefined;
     const errorsApply = () => {
       const error = this.control.errors && Object.keys(this.control.errors)[0] || undefined;
-      // console.log(error);
       if (error && error !== errorName) {
         errorName = error;
         this.changeErrorText(error, this.control.errors![error]);
@@ -39,7 +37,7 @@ export class ControlErrorDirective implements OnInit, OnDestroy {
     };
 
     const merged = merge(
-      this.control.valueChanges.pipe(startWith(<string | number>this.control.value)),
+      this.control.valueChanges.pipe(startWith(this.control.value as string | number)),
       this.control.statusChanges.pipe(distinctUntilChanged()),
     ).subscribe(errorsApply);
     this.subscription.add(merged);
@@ -49,7 +47,7 @@ export class ControlErrorDirective implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private changeErrorText(error: string, params: IErrorValidationParams | undefined): void {
+  private changeErrorText(error: string/*, params: IErrorValidationParams | undefined*/): void {
     const text = errorList[error] || errorList.default;
 
     if (!this.element) {
