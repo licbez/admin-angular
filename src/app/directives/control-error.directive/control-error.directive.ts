@@ -29,7 +29,7 @@ export class ControlErrorDirective implements OnInit, OnDestroy {
       const error = this.control.errors && Object.keys(this.control.errors)[0] || undefined;
       if (error && error !== errorName) {
         errorName = error;
-        this.changeErrorText(error, this.control.errors![error]);
+        this.changeErrorText(error);
       } else if (!error && errorName) {
         errorName = undefined;
         this.clearView();
@@ -47,7 +47,7 @@ export class ControlErrorDirective implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private changeErrorText(error: string/*, params: IErrorValidationParams | undefined*/): void {
+  private changeErrorText(error: string): void {
     const text = errorList[error] || errorList.default;
 
     if (!this.element) {
